@@ -1,16 +1,16 @@
-public class Main {
+public class Application {
 
 
 
     public static void main(String[] args){
-        Main main = new Main();
-        main.run();
+        Application application = new Application();
+        application.run();
     }
 
     private void run() {
         Controller controller = new Controller();
         UserInterface ui = new UserInterface(controller);
-        //controller.start();    Som kører program og loader filerne ind
+        //controller.start(); Som kører program og loader filerne ind
         ui.run();
     }
-}
+} 
