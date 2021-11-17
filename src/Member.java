@@ -7,16 +7,18 @@ public abstract class Member {
     private int yearOfBirth;
     private String phoneNumber;
     private String email;
+    private boolean isActive;
 
     private int id;
 
-    public Member(String firstName, String middleName, String lastName, int yearOfBirth, String phoneNumber, String email) {
+    public Member(String firstName, String middleName, String lastName, int yearOfBirth, String phoneNumber, String email, boolean isActive) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.yearOfBirth = yearOfBirth;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.isActive = isActive;
         this.id = idCounter++;
     }
 
