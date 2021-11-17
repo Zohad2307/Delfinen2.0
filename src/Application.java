@@ -12,5 +12,7 @@ public class Application {
         UserInterface ui = new UserInterface(controller);
         //controller.start(); Som kører program og loader filerne ind
         ui.run();
+
+
     }
 } 
