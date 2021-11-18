@@ -2,7 +2,9 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class DataBase {
+    String userInfo = "Userinfo.txt";
     ArrayList<Member> members = new ArrayList<>();
+
 
 
 

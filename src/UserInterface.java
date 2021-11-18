@@ -4,7 +4,7 @@ public class UserInterface {
     private Controller controller;
     Scanner input = new Scanner(System.in);
 
-    UserInterface(Controller controller) {
+   public UserInterface(Controller controller) {
         this.controller = controller;
 
     }
