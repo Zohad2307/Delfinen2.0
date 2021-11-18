@@ -36,6 +36,7 @@ public class UserInterface {
                     break;
                 case 9:
                     isRunning = false;
+                    controller.saveFiles();
                     //Eventuelt gemme det man på nuværende tidspunkt har lavet
                     break;
                 default:
@@ -75,6 +76,7 @@ public class UserInterface {
         }else{
             isCompetitiveSwimmer = false;
         }
-        controller.createMember(firstName,middleName,lastName,yearOfBirth,phone,email,isActive,isCompetitiveSwimmer);
+        Member member = controller.createMember(firstName,middleName,lastName,yearOfBirth,phone,email,isActive,isCompetitiveSwimmer);
+        System.out.println("Har oprettet nyt medlem: " + member);
     }
 }

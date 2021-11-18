@@ -8,6 +8,7 @@ public abstract class Member {
     private String phoneNumber;
     private String email;
     private boolean isActive;
+    private boolean isCompetitive = false;
 
     private int id;
 
@@ -28,5 +29,13 @@ public abstract class Member {
     public String toString() {
         return "#" + id + " " + firstName + " " + middleName + " " + lastName + " year of birth: " + yearOfBirth +
                 " phone: " + phoneNumber + " email: " + email;
+    }
+    public String toFile(){
+        return firstName + " " + middleName + " " + lastName + " " + yearOfBirth +
+                " " + phoneNumber + " " + email + " " + isActive + " " + isCompetitive;
+    }
+
+    public void setIsCompetitive(boolean isCompetitive) {
+        this.isCompetitive = isCompetitive;
     }
 }

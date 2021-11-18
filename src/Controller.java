@@ -12,4 +12,7 @@ public class Controller {
         return db.createMember(firstName,middleName,lastName,yearOfBirth,phone,email,isActive,isCompetitiveSwimmer);
     }
 
+    public void saveFiles() {
+        db.saveFiles();
+    }
 }
