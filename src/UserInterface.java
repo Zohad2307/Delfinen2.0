@@ -15,7 +15,6 @@ public class UserInterface {
 
         boolean isRunning = true;
 
-
         menu.printMenu();
         while(isRunning) {
             switch(menu.readChoice()) {

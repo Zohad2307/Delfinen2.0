@@ -2,7 +2,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class DataBase {
-    String userInfo = "src/Userinfo.txt";
+    final String fileUserInfo = "src/Userinfo.txt";
     ArrayList<Member> members = new ArrayList<>();
 
 
@@ -22,7 +22,7 @@ public class DataBase {
 
     public void saveFiles() {
         try {
-            PrintStream printStream = new PrintStream(userInfo);
+            PrintStream printStream = new PrintStream(fileUserInfo);
             for (Member member:members) {
                 printStream.println(member.toFile());
             }
