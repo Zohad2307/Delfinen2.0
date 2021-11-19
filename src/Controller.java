@@ -5,7 +5,7 @@ public class Controller {
 
     }
     public void start() {
-        
+        db.loadFiles();
     }
 
     public Member createMember(String firstName, String middleName, String lastName, int yearOfBirth, String phone,

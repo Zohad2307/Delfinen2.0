@@ -1,8 +1,10 @@
+import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class DataBase {
-    final String fileUserInfo = "src/Userinfo.txt";
+    final File fileUserInfo = new File("src/Userinfo.txt");
     ArrayList<Member> members = new ArrayList<>();
 
 
@@ -21,6 +23,7 @@ public class DataBase {
     }
 
     public void saveFiles() {
+        System.out.println(members);
         try {
             PrintStream printStream = new PrintStream(fileUserInfo);
             for (Member member:members) {
@@ -29,6 +32,17 @@ public class DataBase {
         }
         catch(Exception e){
             System.out.println("Denne fil findes ikke!!");
+        }
+    }
+    public void loadFiles(){
+        try{
+           Scanner fileReader = new Scanner(fileUserInfo);
+           while (fileReader.hasNext()){
+               createMember(fileReader.next(),fileReader.next(),fileReader.next(),
+                       fileReader.nextInt(),fileReader.next(),fileReader.next(),fileReader.nextBoolean(),fileReader.nextBoolean());
+           }
+        }catch(Exception e){
+            System.out.println("Filen findes ikke");
         }
     }
 }

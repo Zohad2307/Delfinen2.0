@@ -11,6 +11,7 @@ public class Application {
         Controller controller = new Controller();
         UserInterface ui = new UserInterface(controller);
         //controller.start(); Som kører program og loader filerne ind
+        controller.start();
         ui.run();
 
 
