@@ -1,10 +1,10 @@
 public class Result {
     String mail;
     String disciplin;
-    double time;
+    int time;
     String date;
     boolean isCompetitiveResult = false;
-    Result(String mail, String disciplin, double time, String date){
+    Result(String mail, String disciplin, int time, String date){
         this.mail = mail;
         this.disciplin = disciplin;
         this.time = time;

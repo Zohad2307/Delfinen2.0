@@ -1,7 +1,7 @@
 public class CompetitiveResult extends Result{
     String nameOfCompetition;
     boolean isCompetitiveResult = true;
-    CompetitiveResult(String mail, String disciplin, double time, String date, String nameOfCompetition){
+    CompetitiveResult(String mail, String disciplin, int time, String date, String nameOfCompetition){
         super(mail,disciplin,time,date);
         this.nameOfCompetition = nameOfCompetition;
     }

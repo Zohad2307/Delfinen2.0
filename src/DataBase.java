@@ -102,9 +102,9 @@ public class DataBase {
             Result result;
             while(fileReader.hasNext()){
                 if(fileReader.nextBoolean()){
-                    result = new CompetitiveResult(fileReader.next(),fileReader.next(),fileReader.nextDouble(),fileReader.next(),fileReader.next());
+                    result = new CompetitiveResult(fileReader.next(),fileReader.next(),fileReader.nextInt(),fileReader.next(),fileReader.next());
                 } else{
-                    result = new Result(fileReader.next(),fileReader.next(),fileReader.nextDouble(),fileReader.next());
+                    result = new Result(fileReader.next(),fileReader.next(),fileReader.nextInt(),fileReader.next());
                 }
                 results.add(result);
             }
@@ -113,4 +113,5 @@ public class DataBase {
             System.out.println("Resultat kunne ikke loades");
         }
     }
+
 }

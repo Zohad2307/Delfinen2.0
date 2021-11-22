@@ -71,6 +71,8 @@ public class UserInterface {
             tournament = input.next();
         }
         controller.registerResult(personNumber,disciplin,date,time,tournament, isCompetitiveResult);
+
+        //TODO add toString så den skrive nåede når et resultat er oprettet
     }
 
     private void createMember() {

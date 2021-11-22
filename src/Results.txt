@@ -1,1 +1,2 @@
-true danielkoltze@gmail.com Butterfly 115.0 13/12/2013 Greve
+true danielkoltze@gmail.com Butterfly 115 13/12/2013 Greve
+false karl@gmail.com Brystsvømning 153 15/5/2020
