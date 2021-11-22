@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Controller {
     DataBase db = new DataBase();
 
@@ -15,5 +17,13 @@ public class Controller {
 
     public void saveFiles() {
         db.saveFiles();
+    }
+
+    public Member[] getCompetitiveSwimmers() {
+        return db.getCompetitiveSwimmers();
+    }
+
+    public void registerResult(int personNumber, int disciplin, String date, int time, String tournament) {
+        db.registerResult(personNumber, disciplin, date, time, tournament);
     }
 }

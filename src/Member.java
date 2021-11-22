@@ -23,6 +23,10 @@ public abstract class Member {
         this.id = idCounter++;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public int getId() {
         return id;
     }

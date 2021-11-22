@@ -1,10 +1,15 @@
 public class Result {
-    String name;
+    String mail;
+    String disciplin;
     double time;
     String date;
-    Result(String name, double time, String date){
-        this.name = name;
+    Result(String mail, String disciplin, double time, String date){
+        this.mail = mail;
+        this.disciplin = disciplin;
         this.time = time;
         this.date = date;
+    }
+    String toFile(){
+        return  "Træning " + mail + " " + disciplin + " " + time + " " + date;
     }
 }

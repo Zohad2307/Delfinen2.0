@@ -25,7 +25,7 @@ public class UserInterface {
                     //controller.getTopFive();
                     break;
                 case 3:
-                    //controller.registerResult();
+                    registerResult();
                     break;
                 case 4:
                     //controller.getRegnskab();
@@ -43,6 +43,28 @@ public class UserInterface {
 
             }
         }
+    }
+
+    private void registerResult() {
+        String tournament = "";
+        System.out.println("Indtast nummeret på den person der skal have registreret en tid");
+        for (Member member:controller.getCompetitiveSwimmers()) {
+            System.out.println(member);
+        }
+        int personNumber = input.nextInt();
+        System.out.println("Hvilken svømmedisciplin skal registreres?\n1. Crawl\n2. Rygcrawl\n3. Butterfly\n4. Brystsvømning");
+        int disciplin = input.nextInt();
+        System.out.println("Vil du registrere en konkurrencetid eller en træningstid? k/t");
+        String choice = input.next();
+        System.out.println("Indtast den dato for hvornår tiden er svømmet");
+        String date = input.next();
+        System.out.println("Indtast din tid i sekunder");
+        int time = input.nextInt();
+        if(choice.equals("k")){
+            System.out.println("Indtast navnet på turneringen");
+            tournament = input.next();
+        }
+        controller.registerResult(personNumber,disciplin,date,time,tournament);
     }
 
     private void createMember() {
