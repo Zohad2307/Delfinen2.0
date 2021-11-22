@@ -74,7 +74,7 @@ public class DataBase {
     }
    //public void registerCompetitiveResult(int personNumber, int disciplin, String date, int  )
 
-    public void registerResult(int personNumber, int disciplin, String date, int time, String tournament) {
+    public void registerResult(int personNumber, int disciplin, String date, int time, String tournament, boolean isCompetitiveResult) {
         String disc;
         if(disciplin == 1){
             disc = "Crawl";
@@ -88,10 +88,10 @@ public class DataBase {
         Result result;
         Member[] competitiveSwimmers = getCompetitiveSwimmers();
         String mail = competitiveSwimmers[personNumber-1].getEmail();
-        if(tournament.equals("")){
-            result = new Result(mail,disc,time,date);
-        }else{
+        if(isCompetitiveResult){
             result = new CompetitiveResult(mail,disc,time,date,tournament);
+        }else{
+            result = new Result(mail,disc,time,date);
         }
         results.add(result);
     }
@@ -99,12 +99,12 @@ public class DataBase {
     public void loadResults(){
         try {
             Scanner fileReader = new Scanner(fileResults);
-            Result result = null;
+            Result result;
             while(fileReader.hasNext()){
-                if(fileReader.next().equals("Træning")){
-                    result = new Result(fileReader.next(),fileReader.next(),fileReader.nextDouble(),fileReader.next());
-                } else if(fileReader.next().equals("Konkurrence")){
+                if(fileReader.nextBoolean()){
                     result = new CompetitiveResult(fileReader.next(),fileReader.next(),fileReader.nextDouble(),fileReader.next(),fileReader.next());
+                } else{
+                    result = new Result(fileReader.next(),fileReader.next(),fileReader.nextDouble(),fileReader.next());
                 }
                 results.add(result);
             }

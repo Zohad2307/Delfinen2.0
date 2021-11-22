@@ -3,6 +3,7 @@ public class Result {
     String disciplin;
     double time;
     String date;
+    boolean isCompetitiveResult = false;
     Result(String mail, String disciplin, double time, String date){
         this.mail = mail;
         this.disciplin = disciplin;
@@ -10,6 +11,6 @@ public class Result {
         this.date = date;
     }
     String toFile(){
-        return  "Træning " + mail + " " + disciplin + " " + time + " " + date;
+        return isCompetitiveResult + " " + mail + " " + disciplin + " " + time + " " + date;
     }
 }

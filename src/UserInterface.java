@@ -47,6 +47,7 @@ public class UserInterface {
 
     private void registerResult() {
         String tournament = "";
+        boolean isCompetitiveResult;
         System.out.println("Indtast nummeret på den person der skal have registreret en tid");
         for (Member member:controller.getCompetitiveSwimmers()) {
             System.out.println(member);
@@ -56,6 +57,11 @@ public class UserInterface {
         int disciplin = input.nextInt();
         System.out.println("Vil du registrere en konkurrencetid eller en træningstid? k/t");
         String choice = input.next();
+        if(choice.equals("k")){
+            isCompetitiveResult = true;
+        }else{
+            isCompetitiveResult = false;
+        }
         System.out.println("Indtast den dato for hvornår tiden er svømmet");
         String date = input.next();
         System.out.println("Indtast din tid i sekunder");
@@ -64,7 +70,7 @@ public class UserInterface {
             System.out.println("Indtast navnet på turneringen");
             tournament = input.next();
         }
-        controller.registerResult(personNumber,disciplin,date,time,tournament);
+        controller.registerResult(personNumber,disciplin,date,time,tournament, isCompetitiveResult);
     }
 
     private void createMember() {

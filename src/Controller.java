@@ -23,7 +23,7 @@ public class Controller {
         return db.getCompetitiveSwimmers();
     }
 
-    public void registerResult(int personNumber, int disciplin, String date, int time, String tournament) {
-        db.registerResult(personNumber, disciplin, date, time, tournament);
+    public void registerResult(int personNumber, int disciplin, String date, int time, String tournament, boolean isCompetitiveResult) {
+        db.registerResult(personNumber, disciplin, date, time, tournament, isCompetitiveResult);
     }
 }
