@@ -57,6 +57,7 @@ public class DataBase {
            }
         }catch(Exception e){
             System.out.println("Filen findes ikke");
+            System.out.println("Personer kunne ikke loades");
         }
         loadResults();
 
