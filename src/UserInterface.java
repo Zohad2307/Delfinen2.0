@@ -22,7 +22,7 @@ public class UserInterface {
                     createMember();
                     break;
                 case 2:
-                    //controller.getTopFive();
+                    getTopFive();
                     break;
                 case 3:
                     registerResult();
@@ -43,6 +43,18 @@ public class UserInterface {
 
             }
         }
+    }
+    private void getTopFive() {
+        System.out.println("Vælg svømmedisciplin");
+        int swimmingDiscipline = input.nextInt();
+
+        int id = 1;
+        for (String string: controller.getTopFive(swimmingDiscipline)) {
+            System.out.println(id + " " + string);
+            id++;
+
+        }
+
     }
 
     private void registerResult() {

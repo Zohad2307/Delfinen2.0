@@ -1,6 +1,4 @@
 true danielkoltze@gmail.com Butterfly 115 13/12/2013 Greve
-true danielkoltze@gmail.com Butterfly 116 13/12/2013 Greve
-false mieæstergaardnielsen@gmail.com Crawl 117 13/12/2018
-true mieæstergaardnielsen@gmail.com Crawl 113 13/12/2019 OL
-false mieæstergaardnielsen@gmail.com Butterfly 111 13/12/2020
-false mieæstergaardnielsen@gmail.com Butterfly 109 20/12/2019
+true rikkemøllerpeedersen@gmail.com Butterfly 108 24/11/2021 Ol
+true mieæstergaardnielsen@gmail.com Butterfly 105 30/11/2021 ol
+true mieæstergaardnielsen@gmail.com Crawl 103 27/11/2021 ol

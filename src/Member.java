@@ -38,8 +38,15 @@ public abstract class Member {
         return firstName + " " + middleName + " " + lastName + " " + yearOfBirth +
                 " " + phoneNumber + " " + email + " " + isActive + " " + isCompetitive;
     }
+    public String getFullName() {
+        return firstName + " " + middleName + " " + lastName;
+    }
 
     public void setIsCompetitive(boolean isCompetitive) {
         this.isCompetitive = isCompetitive;
     }
+
+
+    // public int/payment getPayment() {} noget med dato og så videre
 }
+

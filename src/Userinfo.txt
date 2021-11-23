@@ -1,7 +1,7 @@
 Daniel Koltze Jørgensen 2000 22974699 danielkoltze@gmail.com true true
 karl karl karl 1929 224323423 karl@gmail.com false false
 Mie Østergaard Nielsen 1996 23145232 mieæstergaardnielsen@gmail.com true true
-Rikke Møller Peedersen  1989 23145231 rikkemøllerpeedersen@gmail.com true true
+Rikke Møller Peedersen 1989 23145231 rikkemøllerpeedersen@gmail.com true true
 Julie Kepp Jensen 2000 32543324 Juliekeppjensen@gmail.com true true
 Alexander Aslak Nørgaard 1993 54634352 alexanderaslaknørgaard.com true true
 Mathias Zander Rysgaard 1985 23452345 mathiaszanderrysgaard@gmail.com true true
