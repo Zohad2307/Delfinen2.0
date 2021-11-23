@@ -1,2 +1,6 @@
 true danielkoltze@gmail.com Butterfly 115 13/12/2013 Greve
-false karl@gmail.com Brystsvømning 153 15/5/2020
+true danielkoltze@gmail.com Butterfly 116 13/12/2013 Greve
+false mieæstergaardnielsen@gmail.com Crawl 117 13/12/2018
+true mieæstergaardnielsen@gmail.com Crawl 113 13/12/2019 OL
+false mieæstergaardnielsen@gmail.com Butterfly 111 13/12/2020
+false mieæstergaardnielsen@gmail.com Butterfly 109 20/12/2019
