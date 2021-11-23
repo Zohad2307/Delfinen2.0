@@ -27,6 +27,11 @@ public class DataBase {
     }
 
     public void saveFiles() {
+        saveUserinfo();
+        saveResult();
+    }
+
+    private void saveUserinfo() {
         try {
             PrintStream printStream = new PrintStream(fileUserInfo);
             for (Member member : members) {
@@ -35,7 +40,6 @@ public class DataBase {
         } catch (Exception e) {
             System.out.println("Denne fil findes ikke!!");
         }
-        saveResult();
     }
 
     public void saveResult() {
@@ -50,6 +54,12 @@ public class DataBase {
     }
 
     public void loadFiles() {
+        loadUserInfo();
+        loadResults();
+
+    }
+
+    private void loadUserInfo() {
         try {
             Scanner fileReader = new Scanner(fileUserInfo);
             while (fileReader.hasNext()) {
@@ -60,9 +70,8 @@ public class DataBase {
             System.out.println("Filen findes ikke");
             System.out.println("Personer kunne ikke loades");
         }
-        loadResults();
-
     }
+
 
     public Member[] getCompetitiveSwimmers() {
         ArrayList<Member> competitiveMembers = new ArrayList<>();
@@ -175,13 +184,10 @@ public class DataBase {
         ArrayList<String> swimmerInformation = new ArrayList<>();
         for (int i = 0; i < competitiveSwimmers.size(); i++) {
             String fullName = findMember(competitiveSwimmers.get(i).getMail()).getFullName();
-            String information = fullName + " " + "Tid: " + competitiveSwimmers.get(i).getTime();
+            String information = fullName + " " + "Tid:  " + competitiveSwimmers.get(i).getTime();
             swimmerInformation.add(information);
         }
         return swimmerInformation;
-
-        // tage alle resultater ud fra en svømmedisciplin
-        // sorterer dem og så tage top 5 og smide i en nyt array og returnerer arrayet
 
     }
 }

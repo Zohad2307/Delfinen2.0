@@ -45,12 +45,12 @@ public class UserInterface {
         }
     }
     private void getTopFive() {
-        System.out.println("Vælg svømmedisciplin");
+        System.out.println("Vælg svømmedisciplin\n1. Crawl\n2. Rygcrawl\n3. Butterfly\n4. Brystsvømning");
         int swimmingDiscipline = input.nextInt();
 
         int id = 1;
         for (String string: controller.getTopFive(swimmingDiscipline)) {
-            System.out.println(id + " " + string);
+            System.out.println(id + ". " + string);
             id++;
 
         }
