@@ -11,6 +11,9 @@ public class Result implements Comparable<Result> {
         this.time = time;
         this.date = date;
     }
+    public String toString() {
+        return "\nMail: " + mail + "\nDisciplin: " + disciplin + "\nTid: " + time + "\nDato: " + date;
+    }
 
     String toFile() {
         return isCompetitiveResult + " " + mail + " " + disciplin + " " + time + " " + date;

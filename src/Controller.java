@@ -23,8 +23,8 @@ public class Controller {
         return db.getCompetitiveSwimmers();
     }
 
-    public void registerResult(int personNumber, int disciplin, String date, int time, String tournament, boolean isCompetitiveResult) {
-        db.registerResult(personNumber, disciplin, date, time, tournament, isCompetitiveResult);
+    public Result registerResult(int personNumber, int disciplin, String date, int time, String tournament, boolean isCompetitiveResult) {
+        return db.registerResult(personNumber, disciplin, date, time, tournament, isCompetitiveResult);
     }
 
     public ArrayList<String> getTopFive(int swimmingDiscipline) {

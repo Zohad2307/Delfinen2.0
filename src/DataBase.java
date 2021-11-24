@@ -41,7 +41,7 @@ public class DataBase {
             System.out.println("Denne fil findes ikke!!");
         }
     }
-
+ // TODO Lave custom exceptions
     public void saveResult() {
         try {
             PrintStream printStream = new PrintStream(fileResults);
@@ -52,7 +52,7 @@ public class DataBase {
             System.out.println("Denne fil findes ikke!!");
         }
     }
-
+   // TODO lave det om til en CSV-fil i stedet
     public void loadFiles() {
         loadUserInfo();
         loadResults();
@@ -86,8 +86,9 @@ public class DataBase {
     }
 
     //public void registerCompetitiveResult(int personNumber, int disciplin, String date, int  )
+    // TODO Måske overloade metoden så den bliver kaldt alt efter, hvilket indput man sender
     // TODO returnerer noget så man kan printe ud, at der allerede var en bedre tid og tiden man indtastede ikke blev tilføjet.
-    public void registerResult(int personNumber, int disciplin, String date, int time, String tournament, boolean isCompetitiveResult) {
+    public Result registerResult(int personNumber, int disciplin, String date, int time, String tournament, boolean isCompetitiveResult) {
         String disc;
         if (disciplin == 1) {
             disc = "Crawl";
@@ -109,12 +110,17 @@ public class DataBase {
         Result foundResult = findResult(mail, disc);
         if (foundResult == null) {
             results.add(result);
+
         } else {
             if (result.compareTo(foundResult) < 0 || result.compareTo(foundResult) == 0) {
                 results.add(result);
                 results.remove(foundResult);
             }
+            else {
+                result = null;
+            }
         }
+        return result;
     }
 
     public Result findResult(String mail, String discipline) {
@@ -156,7 +162,7 @@ public class DataBase {
             System.out.println("Resultat kunne ikke loades");
         }
     }
-        // TODO Sørge for at det kun er top 5, der kommer med i listen.
+        // TODO Sørge for at det kun er top 5, der kommer med i listen. går ud fra at der minimum er 5 i hver liste.
     public ArrayList<String> getTopFive(int swimmingDiscipline) {
         ArrayList<Result> competitiveSwimmers = new ArrayList<>();
         String discpline = null;

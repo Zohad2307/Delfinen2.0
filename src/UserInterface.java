@@ -82,7 +82,13 @@ public class UserInterface {
             System.out.println("Indtast navnet på turneringen");
             tournament = input.next();
         }
-        controller.registerResult(personNumber,disciplin,date,time,tournament, isCompetitiveResult);
+        Result result = controller.registerResult(personNumber,disciplin,date,time,tournament, isCompetitiveResult);
+        if (result == null) {
+            System.out.println("Du har prøvet at registrerer en tid som er værre end allerede ekstisterende tid");
+        }
+        else {
+            System.out.println("Du har registreret resultatet: " + result);
+        }
 
         //TODO add toString så den skrive nåede når et resultat er oprettet
     }

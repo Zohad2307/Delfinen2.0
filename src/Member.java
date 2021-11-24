@@ -31,8 +31,8 @@ public abstract class Member {
         return id;
     }
     public String toString() {
-        return "#" + id + " " + firstName + " " + middleName + " " + lastName + " year of birth: " + yearOfBirth +
-                " phone: " + phoneNumber + " email: " + email;
+        return "#" + id + " " + firstName + " " + middleName + " " + lastName + ", year of birth: " + yearOfBirth +
+                ", phone: " + phoneNumber + ", email: " + email;
     }
     public String toFile(){
         return firstName + " " + middleName + " " + lastName + " " + yearOfBirth +
