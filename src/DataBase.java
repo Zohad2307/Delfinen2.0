@@ -35,7 +35,7 @@ public class DataBase {
         try {
             PrintStream printStream = new PrintStream(fileUserInfo);
             for (Member member : members) {
-                printStream.println(member.toFile());
+                printStream.print(member.toFile());
             }
         } catch (Exception e) {
             System.out.println("Denne fil findes ikke!!");
@@ -46,22 +46,21 @@ public class DataBase {
         try {
             PrintStream printStream = new PrintStream(fileResults);
             for (Result result : results) {
-                printStream.println(result.toFile());
+                printStream.print(result.toFile());
             }
         } catch (Exception e) {
             System.out.println("Denne fil findes ikke!!");
         }
     }
-   // TODO lave det om til en CSV-fil i stedet
     public void loadFiles() {
         loadUserInfo();
         loadResults();
-
     }
 
     private void loadUserInfo() {
         try {
             Scanner fileReader = new Scanner(fileUserInfo);
+            fileReader.useDelimiter(";");
             while (fileReader.hasNext()) {
                 createMember(fileReader.next(), fileReader.next(), fileReader.next(),
                         fileReader.nextInt(), fileReader.next(), fileReader.next(), fileReader.nextBoolean(), fileReader.nextBoolean());
@@ -87,7 +86,6 @@ public class DataBase {
 
     //public void registerCompetitiveResult(int personNumber, int disciplin, String date, int  )
     // TODO Måske overloade metoden så den bliver kaldt alt efter, hvilket indput man sender
-    // TODO returnerer noget så man kan printe ud, at der allerede var en bedre tid og tiden man indtastede ikke blev tilføjet.
     public Result registerResult(int personNumber, int disciplin, String date, int time, String tournament, boolean isCompetitiveResult) {
         String disc;
         if (disciplin == 1) {
@@ -101,7 +99,15 @@ public class DataBase {
         }
         Result result;
         Member[] competitiveSwimmers = getCompetitiveSwimmers();
-        String mail = competitiveSwimmers[personNumber - 1].getEmail();
+        String mail = null;
+        for (Member member:competitiveSwimmers) {
+            if(member.getId() == personNumber){
+               mail = member.getEmail();
+            }
+        }
+        /*if(mail == null){
+            return null;
+        }*/
         if (isCompetitiveResult) {
             result = new CompetitiveResult(mail, disc, time, date, tournament);
         } else {
@@ -148,6 +154,7 @@ public class DataBase {
     public void loadResults() {
         try {
             Scanner fileReader = new Scanner(fileResults);
+            fileReader.useDelimiter(";");
             Result result;
             while (fileReader.hasNext()) {
                 if (fileReader.nextBoolean()) {

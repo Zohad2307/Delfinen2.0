@@ -60,7 +60,7 @@ public class UserInterface {
     private void registerResult() {
         String tournament = "";
         boolean isCompetitiveResult;
-        System.out.println("Indtast nummeret på den person der skal have registreret en tid");
+        System.out.println("Indtast id på den person der skal have registreret en tid");
         for (Member member:controller.getCompetitiveSwimmers()) {
             System.out.println(member);
         }
@@ -84,13 +84,11 @@ public class UserInterface {
         }
         Result result = controller.registerResult(personNumber,disciplin,date,time,tournament, isCompetitiveResult);
         if (result == null) {
-            System.out.println("Du har prøvet at registrerer en tid som er værre end allerede ekstisterende tid");
+            System.out.println("Du har prøvet at registrere en tid som er værre end en allerede ekstisterende tid");
         }
         else {
             System.out.println("Du har registreret resultatet: " + result);
         }
-
-        //TODO add toString så den skrive nåede når et resultat er oprettet
     }
 
     private void createMember() {
@@ -98,7 +96,7 @@ public class UserInterface {
         boolean isCompetitiveSwimmer;
         System.out.println("Indtast fornavn: ");
         String firstName = input.nextLine();
-        System.out.println("Indtast mellemnavn: ");
+        System.out.println("Indtast mellemnavn (Blank hvis der intet mellemnavn er): ");
         String middleName = input.nextLine();
         System.out.println("Indtast efternavn: ");
         String lastName = input.nextLine();

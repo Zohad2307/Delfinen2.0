@@ -8,8 +8,8 @@ public class CompetitiveResult extends Result {
     }
 
     String toFile() {
-        return isCompetitiveResult + " " + getMail() + " " + getDiscipline() + " " + getTime() +
-                " " + getDate() + " " + nameOfCompetition;
+        return isCompetitiveResult + ";" + getMail() + ";" + getDiscipline() + ";" + getTime() +
+                ";" + getDate() + ";" + nameOfCompetition + ";";
     }
 
 }

@@ -31,12 +31,18 @@ public abstract class Member {
         return id;
     }
     public String toString() {
-        return "#" + id + " " + firstName + " " + middleName + " " + lastName + ", year of birth: " + yearOfBirth +
-                ", phone: " + phoneNumber + ", email: " + email;
+        //TODO ret i det så der ikke er en if
+        if(middleName.equals("")) {
+            return "#" + id + " " + firstName + " " + lastName + ", født i år: " + yearOfBirth +
+                    ", telefonnummer: " + phoneNumber + ", email: " + email;
+        }else {
+            return "#" + id + " " + firstName + " " + middleName + " " + lastName + ", født i år: " + yearOfBirth +
+                    ", telefonnummer: " + phoneNumber + ", email: " + email;
+        }
     }
     public String toFile(){
-        return firstName + " " + middleName + " " + lastName + " " + yearOfBirth +
-                " " + phoneNumber + " " + email + " " + isActive + " " + isCompetitive;
+        return firstName + ";" + middleName + ";" + lastName + ";" + yearOfBirth +
+                ";" + phoneNumber + ";" + email + ";" + isActive + ";" + isCompetitive + ";";
     }
     public String getFullName() {
         return firstName + " " + middleName + " " + lastName;

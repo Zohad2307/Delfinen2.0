@@ -16,7 +16,7 @@ public class Result implements Comparable<Result> {
     }
 
     String toFile() {
-        return isCompetitiveResult + " " + mail + " " + disciplin + " " + time + " " + date;
+        return isCompetitiveResult + ";" + mail + ";" + disciplin + ";" + time + ";" + date + ";";
     }
     public int getTime() {
         return time;

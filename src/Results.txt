@@ -1,4 +1,1 @@
-true danielkoltze@gmail.com Butterfly 115 13/12/2013 Greve
-true rikkemøllerpeedersen@gmail.com Butterfly 108 24/11/2021 Ol
-true mieæstergaardnielsen@gmail.com Butterfly 105 30/11/2021 ol
-true mieæstergaardnielsen@gmail.com Crawl 103 27/11/2021 ol
+true;danielkoltze@gmail.com;Butterfly;115;13/12/2013;Greve;true;mieæstergaardnielsen@gmail.com;Butterfly;105;30/11/2021;ol;true;mieæstergaardnielsen@gmail.com;Crawl;103;27/11/2021;ol;false;alexanderaslaknørgaard.com;Brystsvømning;213;23/6/2005;true;mathiaszanderrysgaard@gmail.com;Brystsvømning;214;20/12/2021;De Olympiske Lege;true;Carolinehansen@gmail.com;Rygcrawl;104;20/04/2018;Greve;false;rikkemøllerpeedersen@gmail.com;Butterfly;107;24/11/2020;false;mathiaszanderrysgaard@gmail.com;Crawl;213;01/02/2020;false;mieæstergaardnielsen@gmail.com;Rygcrawl;107;13/02/2020;
