@@ -200,7 +200,17 @@ public class DataBase {
             String information = fullName + " " + "Tid:  " + competitiveSwimmers.get(i).getTime();
             swimmerInformation.add(information);
         }
-        return swimmerInformation;
+        ArrayList<String> swimmerInformaionTopFive = new ArrayList();
+
+        if (swimmerInformation.size() > 5) {
+            for (int i = 0; i < 5; i++) {
+                swimmerInformaionTopFive.add(swimmerInformation.get(i));
+            }
+        } else {
+            swimmerInformaionTopFive = swimmerInformation;
+        }
+
+        return swimmerInformaionTopFive;
 
     }
 }
