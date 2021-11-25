@@ -28,7 +28,7 @@ public class UserInterface {
                     registerResult();
                     break;
                 case 4:
-                    //controller.getRegnskab();
+                    getPaymentOverview();
                     break;
                 case 5:
                     menu.printMenu();
@@ -44,7 +44,16 @@ public class UserInterface {
             }
         }
     }
+
+    private void getPaymentOverview() {
+       Menu menu = new Menu("Se regnskab","Vælg en af ovennævnte:",new String[]{"1. Se forventet indbetaling pr. år","2. Se restanceoversigt"});
+       menu.printMenu();
+       int choice = input.nextInt();
+
+    }
+
     private void getTopFive() {
+        //Lav det med menu klassen
         System.out.println("Vælg svømmedisciplin\n1. Crawl\n2. Rygcrawl\n3. Butterfly\n4. Brystsvømning");
         int swimmingDiscipline = input.nextInt();
 
@@ -65,6 +74,7 @@ public class UserInterface {
             System.out.println(member);
         }
         int personNumber = input.nextInt();
+        //Lav det med menu klassen
         System.out.println("Hvilken svømmedisciplin skal registreres?\n1. Crawl\n2. Rygcrawl\n3. Butterfly\n4. Brystsvømning");
         int disciplin = input.nextInt();
         System.out.println("Vil du registrere en konkurrencetid eller en træningstid? k/t");
