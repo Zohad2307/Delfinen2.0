@@ -6,6 +6,9 @@ public class CompetitiveResult extends Result {
         super(mail, disciplin, time, date);
         this.nameOfCompetition = nameOfCompetition;
     }
+    public String toString() {
+        return super.toString() + "\nKonkurrence: " + nameOfCompetition;
+    }
 
     String toFile() {
         return isCompetitiveResult + ";" + getMail() + ";" + getDiscipline() + ";" + getTime() +

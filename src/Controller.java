@@ -27,7 +27,7 @@ public class Controller {
         return db.registerResult(personNumber, disciplin, date, time, tournament, isCompetitiveResult);
     }
 
-    public ArrayList<String> getTopFive(int swimmingDiscipline) {
+    public String[] getTopFive(int swimmingDiscipline) {
        return db.getTopFive(swimmingDiscipline);
 
 

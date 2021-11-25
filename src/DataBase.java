@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class DataBase {
@@ -41,7 +42,8 @@ public class DataBase {
             System.out.println("Denne fil findes ikke!!");
         }
     }
- // TODO Lave custom exceptions
+
+    // TODO Lave custom exceptions
     public void saveResult() {
         try {
             PrintStream printStream = new PrintStream(fileResults);
@@ -52,6 +54,7 @@ public class DataBase {
             System.out.println("Denne fil findes ikke!!");
         }
     }
+
     public void loadFiles() {
         loadUserInfo();
         loadResults();
@@ -100,9 +103,9 @@ public class DataBase {
         Result result;
         Member[] competitiveSwimmers = getCompetitiveSwimmers();
         String mail = null;
-        for (Member member:competitiveSwimmers) {
-            if(member.getId() == personNumber){
-               mail = member.getEmail();
+        for (Member member : competitiveSwimmers) {
+            if (member.getId() == personNumber) {
+                mail = member.getEmail();
             }
         }
         /*if(mail == null){
@@ -121,8 +124,7 @@ public class DataBase {
             if (result.compareTo(foundResult) < 0 || result.compareTo(foundResult) == 0) {
                 results.add(result);
                 results.remove(foundResult);
-            }
-            else {
+            } else {
                 result = null;
             }
         }
@@ -169,9 +171,10 @@ public class DataBase {
             System.out.println("Resultat kunne ikke loades");
         }
     }
-        // TODO Sørge for at det kun er top 5, der kommer med i listen. går ud fra at der minimum er 5 i hver liste.
-    public ArrayList<String> getTopFive(int swimmingDiscipline) {
-        ArrayList<Result> competitiveSwimmers = new ArrayList<>();
+
+    // TODO Sørge for at det kun er top 5, der kommer med i listen. går ud fra at der minimum er 5 i hver liste.
+    public String[] getTopFive(int swimmingDiscipline) {
+        ArrayList<Result> swimmerResults = new ArrayList<>();
         String discpline = null;
         switch (swimmingDiscipline) {
             case 1:
@@ -186,32 +189,34 @@ public class DataBase {
             case 4:
                 discpline = "Brystsvømning";
                 break;
-
         }
         for (Result result : results) {
             if (result.getDiscipline().equalsIgnoreCase(discpline)) {
-                competitiveSwimmers.add(result);
+                swimmerResults.add(result);
             }
-        }
-        Collections.sort(competitiveSwimmers);
+        } // Sorterer efter tid
+        Collections.sort(swimmerResults);
+
+
         ArrayList<String> swimmerInformation = new ArrayList<>();
-        for (int i = 0; i < competitiveSwimmers.size(); i++) {
-            String fullName = findMember(competitiveSwimmers.get(i).getMail()).getFullName();
-            String information = fullName + " " + "Tid:  " + competitiveSwimmers.get(i).getTime();
+
+       for (Result result: swimmerResults) {
+            String fullName = findMember(result.getMail()).getFullName();
+            String information = fullName + " Tid: " + result.getTime();
             swimmerInformation.add(information);
         }
-        ArrayList<String> swimmerInformaionTopFive = new ArrayList();
+        // Erklærer et array som bliver initialiseret nedenunder.
+        String[] topFiveSwimmers;
 
         if (swimmerInformation.size() > 5) {
-            for (int i = 0; i < 5; i++) {
-                swimmerInformaionTopFive.add(swimmerInformation.get(i));
-            }
-        } else {
-            swimmerInformaionTopFive = swimmerInformation;
+            // Fjerner alle elementer fra index og med index 5 og op
+            swimmerInformation.subList(5, swimmerInformation.size()).clear();
         }
+        topFiveSwimmers = new String[swimmerInformation.size()];
+        // Smider elementerne over i et String Array
+        swimmerInformation.toArray(topFiveSwimmers);
 
-        return swimmerInformaionTopFive;
-
+        return topFiveSwimmers;
     }
 }
 

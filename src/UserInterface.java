@@ -4,11 +4,12 @@ public class UserInterface {
     private Controller controller;
     Scanner input = new Scanner(System.in);
 
-   public UserInterface(Controller controller) {
+    public UserInterface(Controller controller) {
         this.controller = controller;
 
     }
-    public void run(){
+
+    public void run() {
         Menu menu = new Menu("Velkommen til Delfinen",
                 "Vælg en af ovennævnte muligheder", new String[]{"1. Opret medlem",
                 "2. Se topsvømmere", "3. Registrer resultat", "4. Se Regnskab", "5. Se menuoversigt", "9. Luk program"});
@@ -16,8 +17,8 @@ public class UserInterface {
         boolean isRunning = true;
 
         menu.printMenu();
-        while(isRunning) {
-            switch(menu.readChoice()) {
+        while (isRunning) {
+            switch (menu.readChoice()) {
                 case 1:
                     createMember();
                     break;
@@ -58,19 +59,23 @@ public class UserInterface {
         int swimmingDiscipline = input.nextInt();
 
         int id = 1;
-        for (String string: controller.getTopFive(swimmingDiscipline)) {
-            System.out.println(id + ". " + string);
-            id++;
-
+        if (controller.getTopFive(swimmingDiscipline).length == 0) {
+            System.out.println("Der er ikke nogle konkurrencesvømmere i den valgte disciplin");
         }
+        else {
+            for (String string : controller.getTopFive(swimmingDiscipline)) {
+                System.out.println(id + ". " + string);
+                id++;
 
+            }
+        }
     }
 
     private void registerResult() {
         String tournament = "";
         boolean isCompetitiveResult;
         System.out.println("Indtast id på den person der skal have registreret en tid");
-        for (Member member:controller.getCompetitiveSwimmers()) {
+        for (Member member : controller.getCompetitiveSwimmers()) {
             System.out.println(member);
         }
         int personNumber = input.nextInt();
@@ -79,24 +84,23 @@ public class UserInterface {
         int disciplin = input.nextInt();
         System.out.println("Vil du registrere en konkurrencetid eller en træningstid? k/t");
         String choice = input.next();
-        if(choice.equals("k")){
+        if (choice.equals("k")) {
             isCompetitiveResult = true;
-        }else{
+        } else {
             isCompetitiveResult = false;
         }
         System.out.println("Indtast den dato for hvornår tiden er svømmet");
         String date = input.next();
         System.out.println("Indtast din tid i sekunder");
         int time = input.nextInt();
-        if(choice.equals("k")){
+        if (choice.equals("k")) {
             System.out.println("Indtast navnet på turneringen");
             tournament = input.next();
         }
-        Result result = controller.registerResult(personNumber,disciplin,date,time,tournament, isCompetitiveResult);
+        Result result = controller.registerResult(personNumber, disciplin, date, time, tournament, isCompetitiveResult);
         if (result == null) {
             System.out.println("Du har prøvet at registrere en tid som er værre end en allerede ekstisterende tid");
-        }
-        else {
+        } else {
             System.out.println("Du har registreret resultatet: " + result);
         }
     }
@@ -119,19 +123,19 @@ public class UserInterface {
         String email = input.nextLine();
         System.out.println("Er du aktiv medlem? j/n");
         String aktivEllerPassiv = input.nextLine();
-        if(aktivEllerPassiv.equals("j")){
+        if (aktivEllerPassiv.equals("j")) {
             isActive = true;
-        }else{
+        } else {
             isActive = false;
         }
         System.out.println("Er du konkurrencesvømmer? j/n");
         String membershipType = input.nextLine();
-        if(membershipType.equalsIgnoreCase("j")){
+        if (membershipType.equalsIgnoreCase("j")) {
             isCompetitiveSwimmer = true;
-        }else{
+        } else {
             isCompetitiveSwimmer = false;
         }
-        Member member = controller.createMember(firstName,middleName,lastName,yearOfBirth,phone,email,isActive,isCompetitiveSwimmer);
+        Member member = controller.createMember(firstName, middleName, lastName, yearOfBirth, phone, email, isActive, isCompetitiveSwimmer);
         System.out.println("Har oprettet nyt medlem: " + member);
     }
 }
