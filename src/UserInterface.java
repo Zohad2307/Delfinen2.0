@@ -47,10 +47,25 @@ public class UserInterface {
     }
 
     private void getPaymentOverview() {
-       Menu menu = new Menu("Se regnskab","Vælg en af ovennævnte:",new String[]{"1. Se forventet indbetaling pr. år","2. Se restanceoversigt"});
+       Menu menu = new Menu("Se regnskab","Vælg en af ovennævnte",new String[]
+               {"1. Se forventet indbetaling pr. år","2. Se restanceoversigt"});
        menu.printMenu();
-       int choice = input.nextInt();
 
+       switch(menu.readChoice()) {
+           case 1:
+               System.out.println("Den forventede kontigentindbetaling i år: " + controller.getExpectedPayments() + "kr.");
+               break;
+           case 2:
+               for (String member:controller.showMembersInDebt()) {
+                   System.out.println(member);
+               }
+               break;
+
+           default:
+               printWrongInputMessage();
+
+
+       }
     }
 
     private void getTopFive() {
@@ -135,7 +150,16 @@ public class UserInterface {
         } else {
             isCompetitiveSwimmer = false;
         }
-        Member member = controller.createMember(firstName, middleName, lastName, yearOfBirth, phone, email, isActive, isCompetitiveSwimmer);
+        System.out.println("Har medlem betalt? j/n");
+        boolean hasPaid;
+        membershipType = input.nextLine();
+        if (membershipType.equalsIgnoreCase("j")) {
+            hasPaid = true;
+        } else {
+            hasPaid = false;
+        }
+        Member member = controller.createMember(firstName, middleName, lastName, yearOfBirth,
+                phone, email, isActive, isCompetitiveSwimmer, hasPaid);
         System.out.println("Har oprettet nyt medlem: " + member);
     }
 }

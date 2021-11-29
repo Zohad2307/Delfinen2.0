@@ -16,12 +16,12 @@ public class DataBase {
 
     public Member createMember(String firstName, String middleName, String lastName,
                                int yearOfBirth, String phone, String email, boolean isActive,
-                               boolean isCompetitiveSwimmer) {
+                               boolean isCompetitiveSwimmer, boolean hasPayed) {
         Member member;
         if (isCompetitiveSwimmer) {
-            member = new CompetitiveSwimmer(firstName, middleName, lastName, yearOfBirth, phone, email, isActive);
+            member = new CompetitiveSwimmer(firstName, middleName, lastName, yearOfBirth, phone, email, isActive, hasPayed);
         } else {
-            member = new CasualSwimmer(firstName, middleName, lastName, yearOfBirth, phone, email, isActive);
+            member = new CasualSwimmer(firstName, middleName, lastName, yearOfBirth, phone, email, isActive, hasPayed);
         }
         members.add(member);
         return member;
@@ -66,7 +66,8 @@ public class DataBase {
             fileReader.useDelimiter(";");
             while (fileReader.hasNext()) {
                 createMember(fileReader.next(), fileReader.next(), fileReader.next(),
-                        fileReader.nextInt(), fileReader.next(), fileReader.next(), fileReader.nextBoolean(), fileReader.nextBoolean());
+                        fileReader.nextInt(), fileReader.next(), fileReader.next(),
+                        fileReader.nextBoolean(), fileReader.nextBoolean(), fileReader.nextBoolean());
             }
         } catch (Exception e) {
             System.out.println("Filen findes ikke");
@@ -108,9 +109,6 @@ public class DataBase {
                 mail = member.getEmail();
             }
         }
-        /*if(mail == null){
-            return null;
-        }*/
         if (isCompetitiveResult) {
             result = new CompetitiveResult(mail, disc, time, date, tournament);
         } else {
@@ -217,6 +215,26 @@ public class DataBase {
         swimmerInformation.toArray(topFiveSwimmers);
 
         return topFiveSwimmers;
+    }
+
+    public ArrayList<String> showMembersInDebt() {
+        ArrayList<String> membersInDebt = new ArrayList<>();
+        String line;
+        for (Member member: members) {
+            if(member.getHasPaid() == false){
+                line = member.toPayment();
+                membersInDebt.add(line);
+            }
+        }
+        return membersInDebt;
+    }
+
+    public int getExpectedPayments() {
+        int payment = 0;
+        for (Member member:members) {
+            payment = payment + member.getPayment();
+        }
+        return payment;
     }
 }
 
