@@ -40,11 +40,12 @@ public class UserInterface {
                     //Eventuelt gemme det man på nuværende tidspunkt har lavet
                     break;
                 default:
-                    System.out.println("Dit valg er ikke gyldigt.");
+                    printWrongInputMessage();
 
             }
         }
     }
+
 
     private void getPaymentOverview() {
        Menu menu = new Menu("Se regnskab","Vælg en af ovennævnte",new String[]
@@ -94,8 +95,9 @@ public class UserInterface {
             System.out.println(member);
         }
         int personNumber = input.nextInt();
-        //Lav det med menu klassen
-        System.out.println("Hvilken svømmedisciplin skal registreres?\n1. Crawl\n2. Rygcrawl\n3. Butterfly\n4. Brystsvømning");
+        //TODO Lav det med menu klassen
+        System.out.println("Hvilken svømmedisciplin skal registreres?\n1. Crawl\n2. Rygcrawl" +
+                "\n3. Butterfly\n4. Brystsvømning");
         int disciplin = input.nextInt();
         System.out.println("Vil du registrere en konkurrencetid eller en træningstid? k/t");
         String choice = input.next();
@@ -112,7 +114,8 @@ public class UserInterface {
             System.out.println("Indtast navnet på turneringen");
             tournament = input.next();
         }
-        Result result = controller.registerResult(personNumber, disciplin, date, time, tournament, isCompetitiveResult);
+        Result result = controller.registerResult(personNumber, disciplin, date,
+                                                  time, tournament, isCompetitiveResult);
         if (result == null) {
             System.out.println("Du har prøvet at registrere en tid som er værre end en allerede ekstisterende tid");
         } else {
@@ -145,7 +148,7 @@ public class UserInterface {
         }
         System.out.println("Er du konkurrencesvømmer? j/n");
         String membershipType = input.nextLine();
-        if (membershipType.equalsIgnoreCase("j")) {
+        if (membershipType.equalsIgnoreCase("ja") || membershipType.equalsIgnoreCase("j")) {
             isCompetitiveSwimmer = true;
         } else {
             isCompetitiveSwimmer = false;
@@ -162,4 +165,9 @@ public class UserInterface {
                 phone, email, isActive, isCompetitiveSwimmer, hasPaid);
         System.out.println("Har oprettet nyt medlem: " + member);
     }
+
+    public void printWrongInputMessage(){
+        System.out.println("Dit indtastede valg er ikke en mulighed");
+    }
 }
+
