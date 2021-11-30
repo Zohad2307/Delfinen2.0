@@ -9,7 +9,7 @@ Viktor;Koltze;Bromer;2001;234234234;viktorkoltzebromer@gmail.com;false;false;fal
 Karl;Emil;Andersen;1999;23453432;Karlemilandersen@yahoo.dk;true;false;true;
 Caroline;;Hansen;2001;43643264;Carolinehansen@gmail.com;true;true;true;
 Martin;Arnt Schreiner;Pedersen;1994;63236432;MartinPedersen@gmail.com;true;true;false;
-Adel;;Onid;2000;52325321;Adelonid@gmail.com;true;true;true;
+Adel;;Onib;2000;52325321;Adelonib@gmail.com;true;true;true;
 Henning;Henningo;Henningsen;1900;12345678;Henning@gmail.com;true;true;false;
 Peter;Rude;Torp;2005;20392352;Peterrudetorp@gmail.com;true;true;true;
 Aksel;;Skrydstrup;2007;25325323;akselskrydstrup;true;true;false;
