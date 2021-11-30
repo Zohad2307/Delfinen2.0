@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.sql.Array;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,19 +37,19 @@ public class DataBase {
         try {
             PrintStream printStream = new PrintStream(fileUserInfo);
             for (Member member : members) {
-                printStream.print(member.toFile());
+                printStream.println(member.toFile());
             }
         } catch (FileNotFoundException e) {
             throw new CSVFileWriteException("Kunne ikke skrive til filen", e);
         }
     }
 
-    // TODO Lave custom exceptions
+
     public void saveResult() throws CSVFileWriteException {
         try {
             PrintStream printStream = new PrintStream(fileResults);
             for (Result result : results) {
-                printStream.print(result.toFile());
+                printStream.println(result.toFile());
             }
         } catch (FileNotFoundException e) {
             throw new CSVFileWriteException("Kunne ikke skrive til filen", e);
@@ -68,6 +69,7 @@ public class DataBase {
                 createMember(fileReader.next(), fileReader.next(), fileReader.next(),
                         fileReader.nextInt(), fileReader.next(), fileReader.next(),
                         fileReader.nextBoolean(), fileReader.nextBoolean(), fileReader.nextBoolean());
+                fileReader.nextLine();
             }
         } catch (FileNotFoundException e) {
             throw new CSVFileReadException("Kunne ikke læse filen", e);
@@ -158,8 +160,10 @@ public class DataBase {
             while (fileReader.hasNext()) {
                 if (fileReader.nextBoolean()) {
                     result = new CompetitiveResult(fileReader.next(), fileReader.next(), fileReader.nextInt(), fileReader.next(), fileReader.next());
+                    fileReader.nextLine();
                 } else {
                     result = new Result(fileReader.next(), fileReader.next(), fileReader.nextInt(), fileReader.next());
+                    fileReader.nextLine();
                 }
                 results.add(result);
             }
@@ -170,7 +174,7 @@ public class DataBase {
     //FIXME Rykke Switch over i User-interface,
     // - så man kan printe disciplinen ud sammen med listen af konkurrencesvømmere.
 
-    public String[] showTopFive(int swimmingDiscipline) {
+    public String[] showTopFive(int swimmingDiscipline, boolean isJuniorSwimmer) {
         ArrayList<Result> swimmerResults = new ArrayList<>();
         String discpline = null;
         switch (swimmingDiscipline) {
@@ -187,11 +191,23 @@ public class DataBase {
                 discpline = "Brystsvømning";
                 break;
         }
-        for (Result result : results) {
-            if (result.getDiscipline().equalsIgnoreCase(discpline)) {
-                swimmerResults.add(result);
+        int currentYear = Year.now().getValue();
+        if (isJuniorSwimmer) {
+            for (Result result : results) {
+                if (result.getDiscipline().equalsIgnoreCase(discpline)
+                        && currentYear - findMember(result.getMail()).getYearOfBirth() < 18) {
+                    swimmerResults.add(result);
+                }
             }
-        } // Sorterer efter tid
+        } else {
+            for (Result result : results) {
+                if (result.getDiscipline().equalsIgnoreCase(discpline)
+                        && currentYear - findMember(result.getMail()).getYearOfBirth() >= 18) {
+                    swimmerResults.add(result);
+                }
+            }
+        }
+        // Sorterer efter tid
         Collections.sort(swimmerResults);
 
 

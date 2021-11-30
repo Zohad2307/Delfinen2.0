@@ -15,7 +15,7 @@ public abstract class Member {
     private int id;
 
     public Member(String firstName, String middleName, String lastName, int yearOfBirth,
-                  String phoneNumber, String email, boolean isActive, boolean hasPayed) {
+                  String phoneNumber, String email, boolean isActive, boolean hasPaid) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -24,7 +24,7 @@ public abstract class Member {
         this.email = email;
         this.isActive = isActive;
         this.id = idCounter++;
-        this.hasPaid = hasPayed;
+        this.hasPaid = hasPaid;
     }
 
     public String getEmail() {
@@ -59,7 +59,13 @@ public abstract class Member {
         return hasPaid;
     }
     public String toPayment(){
-        return toString() + " " + getPayment() + "kr.";
+        final String TEXT_RED = "\u001B[31m";
+        final String TEXT_RESET = "\u001B[0m";
+        return toString() + " "+ TEXT_RED + getPayment() + "kr." + TEXT_RESET;
+    }
+
+    public int getYearOfBirth() {
+        return yearOfBirth;
     }
 
     public int getPayment() {

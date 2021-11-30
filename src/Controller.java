@@ -27,8 +27,8 @@ public class Controller {
         return db.registerResult(personNumber, disciplin, date, time, tournament, isCompetitiveResult);
     }
 
-    public String[] getTopFive(int swimmingDiscipline) {
-       return db.showTopFive(swimmingDiscipline);
+    public String[] getTopFive(int swimmingDiscipline, boolean isJuniorSwimmer) {
+       return db.showTopFive(swimmingDiscipline, isJuniorSwimmer);
 
     }
 

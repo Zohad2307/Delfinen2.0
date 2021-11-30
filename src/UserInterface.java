@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class UserInterface {
     private Controller controller;
     Scanner input = new Scanner(System.in);
-
     public UserInterface(Controller controller) {
         this.controller = controller;
 
@@ -65,7 +64,8 @@ public class UserInterface {
 
         switch (menu.readChoice()) {
             case 1:
-                System.out.println("Den forventede kontigentindbetaling i år: " + controller.getExpectedPayments() + "kr.");
+                final String TEXT_GREEN = "\u001B[32m";
+                System.out.println("Den forventede kontigentindbetaling i år: " + TEXT_GREEN + controller.getExpectedPayments() + "kr.");
                 break;
             case 2:
                 for (String member : controller.showMembersInDebt()) {
@@ -81,12 +81,20 @@ public class UserInterface {
     }
 
     private void getTopFive() {
+        System.out.println("Vælg om du vil se junior- eller seniorkonkurrencesvømmere \n1. Junior \n2. Senior");
+        int swimmingTeam = input.nextInt();
+        boolean isJuniorSwimmer;
+        if(swimmingTeam == 1){
+            isJuniorSwimmer = true;
+        }else{
+            isJuniorSwimmer = false;
+        }
         //Lav det med menu klassen
         System.out.println("Vælg svømmedisciplin\n1. Crawl\n2. Rygcrawl\n3. Butterfly\n4. Brystsvømning");
         int swimmingDiscipline = input.nextInt();
 
         int id = 1;
-        if (controller.getTopFive(swimmingDiscipline).length == 0) {
+        if (controller.getTopFive(swimmingDiscipline, isJuniorSwimmer).length == 0) {
             System.out.println("Der er ikke nogle konkurrencesvømmere i den valgte disciplin");
         } else {
             for (String string : controller.getTopFive(swimmingDiscipline)) {
