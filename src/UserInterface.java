@@ -97,7 +97,7 @@ public class UserInterface {
         if (controller.getTopFive(swimmingDiscipline, isJuniorSwimmer).length == 0) {
             System.out.println("Der er ikke nogle konkurrencesvømmere i den valgte disciplin");
         } else {
-            for (String string : controller.getTopFive(swimmingDiscipline)) {
+            for (String string : controller.getTopFive(swimmingDiscipline, isJuniorSwimmer)) {
                 System.out.println(id + ". " + string);
                 id++;
 

@@ -210,7 +210,6 @@ public class DataBase {
         // Sorterer efter tid
         Collections.sort(swimmerResults);
 
-
         ArrayList<String> swimmerInformation = new ArrayList<>();
 
         for (Result result : swimmerResults) {
