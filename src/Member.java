@@ -34,8 +34,8 @@ public abstract class Member {
     public int getId() {
         return id;
     }
+    // Returnerer informationer om medlemmet både med og uden efternavn.
     public String toString() {
-        //TODO ret i det så der ikke er en if
         if(middleName.equals("")) {
             return "#" + id + " " + firstName + " " + lastName + ", født i år: " + yearOfBirth +
                     ", telefonnummer: " + phoneNumber + ", email: " + email;
@@ -68,6 +68,7 @@ public abstract class Member {
         return yearOfBirth;
     }
 
+    // Udregner det enkelte medlems kontingent afhængig af hvilken type medlem de er, og returnerer beløbet.
     public int getPayment() {
         int payment = 0;
         int currentYear = Year.now().getValue();

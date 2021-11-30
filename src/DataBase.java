@@ -9,12 +9,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DataBase {
-    final File fileUserInfo = new File("src/Userinfo.txt");
-    final File fileResults = new File("src/Results.txt");
-    ArrayList<Member> members = new ArrayList<>();
-    ArrayList<Result> results = new ArrayList<>();
+    private final String filenameResults = "src/Results.txt";
+    private final String filenameUserInfo = "src/Userinfo.txt";
+    private final File fileUserInfo = new File(filenameUserInfo);
+    private final File fileResults = new File(filenameResults);
+    private ArrayList<Member> members = new ArrayList<>();
+    private ArrayList<Result> results = new ArrayList<>();
 
-
+    // opretter et member-objekt ud fra kriteriet om man er konkurrencesvømmer
+    // eller ej og tilføjer det til members-listen
     public Member createMember(String firstName, String middleName, String lastName,
                                int yearOfBirth, String phone, String email, boolean isActive,
                                boolean isCompetitiveSwimmer, boolean hasPayed) {
@@ -33,6 +36,8 @@ public class DataBase {
         saveResult();
     }
 
+    // Gemmer alle member-informationerne i en tekstfil. Sender en custom exception til UserInterface, hvor den bliver
+    // skrevet ud.
     private void saveUserinfo() throws CSVFileWriteException {
         try {
             PrintStream printStream = new PrintStream(fileUserInfo);
@@ -40,11 +45,12 @@ public class DataBase {
                 printStream.println(member.toFile());
             }
         } catch (FileNotFoundException e) {
-            throw new CSVFileWriteException("Kunne ikke skrive til filen", e);
+            throw new CSVFileWriteException("Kunne ikke skrive til filen: " + filenameUserInfo, e);
         }
     }
 
-
+    // Gemmer alle result-informationerne i en tekstfil. Sender en custom exception til UserInterface, hvor den bliver
+    // skrevet ud.
     public void saveResult() throws CSVFileWriteException {
         try {
             PrintStream printStream = new PrintStream(fileResults);
@@ -52,7 +58,7 @@ public class DataBase {
                 printStream.println(result.toFile());
             }
         } catch (FileNotFoundException e) {
-            throw new CSVFileWriteException("Kunne ikke skrive til filen", e);
+            throw new CSVFileWriteException("Kunne ikke skrive til filen: " + filenameResults, e);
         }
     }
 
@@ -61,6 +67,35 @@ public class DataBase {
         loadResults();
     }
 
+    /* henter alle result-informationerne fra en tekstfil og opretter results-objekter,
+       som derefter bliver tilføjet til results-listen.
+       Sender en custom exception til UserInterface, hvor den bliver skrevet ud.
+     */
+    public void loadResults() throws CSVFileReadException {
+        try {
+            Scanner fileReader = new Scanner(fileResults);
+            fileReader.useDelimiter(";");
+            Result result;
+            while (fileReader.hasNext()) {
+                if (fileReader.nextBoolean()) {
+                    result = new CompetitiveResult(fileReader.next(), fileReader.next(), fileReader.nextInt(),
+                            fileReader.next(), fileReader.next());
+                    fileReader.nextLine();
+                } else {
+                    result = new Result(fileReader.next(), fileReader.next(), fileReader.nextInt(), fileReader.next());
+                    fileReader.nextLine();
+                }
+                results.add(result);
+            }
+        } catch (FileNotFoundException e) {
+            throw new CSVFileReadException("Kunne ikke læse filen: " + filenameResults, e);
+        }
+    }
+
+    /* henter alle member-informationerne fra en tekstfil og opretter member-objekter,
+       som derefter bliver tilføjet til members-listen.
+       Sender en custom exception til UserInterface, hvor den bliver skrevet ud.
+     */
     private void loadUserInfo() throws CSVFileReadException {
         try {
             Scanner fileReader = new Scanner(fileUserInfo);
@@ -72,11 +107,11 @@ public class DataBase {
                 fileReader.nextLine();
             }
         } catch (FileNotFoundException e) {
-            throw new CSVFileReadException("Kunne ikke læse filen", e);
+            throw new CSVFileReadException("Kunne ikke læse filen: " + filenameUserInfo, e);
         }
     }
 
-
+    // Laver en ny ArrayList, smider alle competitiveSwimmers i. Smider det i et nyt array og returnerer det.
     public Member[] getCompetitiveSwimmers() {
         ArrayList<Member> competitiveMembers = new ArrayList<>();
         for (Member member : members) {
@@ -84,15 +119,16 @@ public class DataBase {
                 competitiveMembers.add(member);
             }
         }
-        // TODO Skal finde ud af, hvad der foregår her og skrive det som en kommentar
+        // Laver et Array med samme størrelse som det array man kalder metoden på,
+        // og smider elementerne over i det nye array
         Member[] competitiveSwimmers = competitiveMembers.toArray(new Member[0]);
         return competitiveSwimmers;
     }
-
-    //public void registerCompetitiveResult(int personNumber, int disciplin, String date, int  )
-    // TODO Måske overloade metoden så den bliver kaldt alt efter, hvilket indput man sender
-    public Result registerResult(int personNumber, int disciplin, String date, int time, String tournament, boolean isCompetitiveResult) {
+    // Registrerer et resultat
+    public Result registerResult(int personNumber, int disciplin, String date, int time,
+                                 String tournament, boolean isCompetitiveResult) {
         String disc;
+        // Tjekker hvilken disciplin der skal registreres en tid i
         if (disciplin == 1) {
             disc = "Crawl";
         } else if (disciplin == 2) {
@@ -103,18 +139,28 @@ public class DataBase {
             disc = "Brystsvømning";
         }
         Result result;
+        // Laver et Member array indeholdende CompetitiveSwimmers
         Member[] competitiveSwimmers = getCompetitiveSwimmers();
+
+        // Looper igennem members-listen. Hvis Id = personNumber, så sætter den mail til memberets mail.
         String mail = null;
         for (Member member : competitiveSwimmers) {
             if (member.getId() == personNumber) {
                 mail = member.getEmail();
             }
         }
+        if (mail == null) {
+            return null;
+        }
+        // Opretter et result-objekt afhængig af information, der er blevet sendt med.
         if (isCompetitiveResult) {
             result = new CompetitiveResult(mail, disc, time, date, tournament);
         } else {
             result = new Result(mail, disc, time, date);
         }
+        // Hvis der ikke allerede er et resultat, så tilføjer den bare det registrede resultat.
+        // Hvis der bliver fundet et resultat, sammenligner den tiderne og beholder det bedste resultat.
+        // returnerer til sidst resultatet, så det kan bliver skrevet ud i UserInterfacet.
         Result foundResult = findResult(mail, disc);
         if (foundResult == null) {
             results.add(result);
@@ -129,7 +175,7 @@ public class DataBase {
         }
         return result;
     }
-
+    // Leder efter et resultat ud fra valgte mail og disciplin og returnerer til sidste resultat eller null
     public Result findResult(String mail, String discipline) {
         Result foundResult = null;
         for (Result result : results) {
@@ -139,41 +185,20 @@ public class DataBase {
         }
         return foundResult;
     }
-
-    public Member findMember(String mail) {
+    // Returnerer member eller null afhængig af den valgte mail
+    public Member findMember(String email) {
         Member foundMember = null;
         for (Member member : members) {
-            if (mail.equalsIgnoreCase(member.getEmail())) {
+            if (email.equalsIgnoreCase(member.getEmail())) {
                 foundMember = member;
             }
-
         }
         return foundMember;
-
     }
 
-    public void loadResults() throws CSVFileReadException {
-        try {
-            Scanner fileReader = new Scanner(fileResults);
-            fileReader.useDelimiter(";");
-            Result result;
-            while (fileReader.hasNext()) {
-                if (fileReader.nextBoolean()) {
-                    result = new CompetitiveResult(fileReader.next(), fileReader.next(), fileReader.nextInt(), fileReader.next(), fileReader.next());
-                    fileReader.nextLine();
-                } else {
-                    result = new Result(fileReader.next(), fileReader.next(), fileReader.nextInt(), fileReader.next());
-                    fileReader.nextLine();
-                }
-                results.add(result);
-            }
-        } catch (FileNotFoundException e) {
-            throw new CSVFileReadException("Kunne ikke læse filen", e);
-        }
-    }
-    //FIXME Rykke Switch over i User-interface,
-    // - så man kan printe disciplinen ud sammen med listen af konkurrencesvømmere.
+    //TODO Hvor vil det være bedst at afgøre hvilken disciplin det er? I UI eller Database?
 
+    // Returnerer en liste med topsvømmere inde for den valgte disciplin
     public String[] showTopFive(int swimmingDiscipline, boolean isJuniorSwimmer) {
         ArrayList<Result> swimmerResults = new ArrayList<>();
         String discpline = null;
@@ -191,6 +216,7 @@ public class DataBase {
                 discpline = "Brystsvømning";
                 break;
         }
+        // looper igennem results-listen. Hvis disciplin og valgte aldersgruppe matcher, bliver de smidt i en ny liste.
         int currentYear = Year.now().getValue();
         if (isJuniorSwimmer) {
             for (Result result : results) {
@@ -207,11 +233,12 @@ public class DataBase {
                 }
             }
         }
-        // Sorterer efter tid
+        // Sorterer resultaterne vha. compareTo metoden i members, som sammenligner tid.
         Collections.sort(swimmerResults);
-
+        // Laver en ny ArrayList som indeholder strings
         ArrayList<String> swimmerInformation = new ArrayList<>();
 
+        // Sammensætter strings med nogle forskellige informationer og tilføjer dem til listen ovenover.
         for (Result result : swimmerResults) {
             String fullName = findMember(result.getMail()).getFullName();
             String information = fullName + " Tid: " + result.getTime();
@@ -221,16 +248,16 @@ public class DataBase {
         String[] topFiveSwimmers;
 
         if (swimmerInformation.size() > 5) {
-            // Fjerner alle elementer fra index og med index 5 og op
+            // Fjerner alle elementer fra og med index 5 og op
             swimmerInformation.subList(5, swimmerInformation.size()).clear();
         }
-        topFiveSwimmers = new String[swimmerInformation.size()];
         // Smider elementerne over i et String Array
-        swimmerInformation.toArray(topFiveSwimmers);
 
-        return topFiveSwimmers;
+        return swimmerInformation.toArray(new String[0]);
     }
 
+    // TODO Spørg hvorfor det er bedst at sende et Array i stedet for f.eks. et objekt eller en ArrayList.
+    // Looper igennem members og tilføjer alle der members med hasPaid = false til en ny liste og returnerer den.
     public ArrayList<String> showMembersInDebt() {
         ArrayList<String> membersInDebt = new ArrayList<>();
         String line;
@@ -242,7 +269,7 @@ public class DataBase {
         }
         return membersInDebt;
     }
-
+    // Lægger alle members kontigentbetalinger sammen og returnerer summen.
     public int getExpectedPayments() {
         int payment = 0;
         for (Member member : members) {
