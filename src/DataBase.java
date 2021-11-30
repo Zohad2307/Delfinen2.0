@@ -32,26 +32,26 @@ public class DataBase {
         saveResult();
     }
 
-    private void saveUserinfo() {
+    private void saveUserinfo() throws CSVFileWriteException {
         try {
             PrintStream printStream = new PrintStream(fileUserInfo);
             for (Member member : members) {
                 printStream.print(member.toFile());
             }
-        } catch (Exception e) {
-            System.out.println("Denne fil findes ikke!!");
+        } catch (FileNotFoundException e) {
+            throw new CSVFileWriteException("Kunne ikke skrive til filen", e);
         }
     }
 
     // TODO Lave custom exceptions
-    public void saveResult() {
+    public void saveResult() throws CSVFileWriteException {
         try {
             PrintStream printStream = new PrintStream(fileResults);
             for (Result result : results) {
                 printStream.print(result.toFile());
             }
-        } catch (Exception e) {
-            System.out.println("Denne fil findes ikke!!");
+        } catch (FileNotFoundException e) {
+            throw new CSVFileWriteException("Kunne ikke skrive til filen", e);
         }
     }
 
@@ -60,7 +60,7 @@ public class DataBase {
         loadResults();
     }
 
-    private void loadUserInfo() {
+    private void loadUserInfo() throws CSVFileReadException {
         try {
             Scanner fileReader = new Scanner(fileUserInfo);
             fileReader.useDelimiter(";");
@@ -69,9 +69,8 @@ public class DataBase {
                         fileReader.nextInt(), fileReader.next(), fileReader.next(),
                         fileReader.nextBoolean(), fileReader.nextBoolean(), fileReader.nextBoolean());
             }
-        } catch (Exception e) {
-            System.out.println("Filen findes ikke");
-            System.out.println("Personer kunne ikke loades");
+        } catch (FileNotFoundException e) {
+            throw new CSVFileReadException("Kunne ikke læse filen", e);
         }
     }
 
@@ -151,7 +150,7 @@ public class DataBase {
 
     }
 
-    public void loadResults() {
+    public void loadResults() throws CSVFileReadException {
         try {
             Scanner fileReader = new Scanner(fileResults);
             fileReader.useDelimiter(";");
@@ -165,13 +164,13 @@ public class DataBase {
                 results.add(result);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Fil findes ikke");
-            System.out.println("Resultat kunne ikke loades");
+            throw new CSVFileReadException("Kunne ikke læse filen", e);
         }
     }
+    //FIXME Rykke Switch over i User-interface,
+    // - så man kan printe disciplinen ud sammen med listen af konkurrencesvømmere.
 
-    // TODO Sørge for at det kun er top 5, der kommer med i listen. går ud fra at der minimum er 5 i hver liste.
-    public String[] getTopFive(int swimmingDiscipline) {
+    public String[] showTopFive(int swimmingDiscipline) {
         ArrayList<Result> swimmerResults = new ArrayList<>();
         String discpline = null;
         switch (swimmingDiscipline) {
@@ -198,7 +197,7 @@ public class DataBase {
 
         ArrayList<String> swimmerInformation = new ArrayList<>();
 
-       for (Result result: swimmerResults) {
+        for (Result result : swimmerResults) {
             String fullName = findMember(result.getMail()).getFullName();
             String information = fullName + " Tid: " + result.getTime();
             swimmerInformation.add(information);
@@ -220,8 +219,8 @@ public class DataBase {
     public ArrayList<String> showMembersInDebt() {
         ArrayList<String> membersInDebt = new ArrayList<>();
         String line;
-        for (Member member: members) {
-            if(member.getHasPaid() == false){
+        for (Member member : members) {
+            if (member.getHasPaid() == false) {
                 line = member.toPayment();
                 membersInDebt.add(line);
             }
@@ -231,7 +230,7 @@ public class DataBase {
 
     public int getExpectedPayments() {
         int payment = 0;
-        for (Member member:members) {
+        for (Member member : members) {
             payment = payment + member.getPayment();
         }
         return payment;

@@ -14,7 +14,8 @@ public abstract class Member {
     private boolean hasPaid;
     private int id;
 
-    public Member(String firstName, String middleName, String lastName, int yearOfBirth, String phoneNumber, String email, boolean isActive, boolean hasPayed) {
+    public Member(String firstName, String middleName, String lastName, int yearOfBirth,
+                  String phoneNumber, String email, boolean isActive, boolean hasPayed) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;

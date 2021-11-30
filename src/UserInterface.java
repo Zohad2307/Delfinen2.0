@@ -13,7 +13,13 @@ public class UserInterface {
         Menu menu = new Menu("Velkommen til Delfinen",
                 "Vælg en af ovennævnte muligheder", new String[]{"1. Opret medlem",
                 "2. Se topsvømmere", "3. Registrer resultat", "4. Se Regnskab", "5. Se menuoversigt", "9. Luk program"});
+        try {
+            controller.start();
+        }
+        catch (CSVFileReadException e) {
+            System.out.println(e);
 
+        }
         boolean isRunning = true;
 
         menu.printMenu();
@@ -36,7 +42,12 @@ public class UserInterface {
                     break;
                 case 9:
                     isRunning = false;
-                    controller.saveFiles();
+                    try {
+                        controller.saveFiles();
+                    }
+                    catch (CSVFileWriteException e) {
+                        System.out.println(e);
+                    }
                     //Eventuelt gemme det man på nuværende tidspunkt har lavet
                     break;
                 default:
@@ -48,25 +59,25 @@ public class UserInterface {
 
 
     private void getPaymentOverview() {
-       Menu menu = new Menu("Se regnskab","Vælg en af ovennævnte",new String[]
-               {"1. Se forventet indbetaling pr. år","2. Se restanceoversigt"});
-       menu.printMenu();
+        Menu menu = new Menu("Se regnskab", "Vælg en af ovennævnte", new String[]
+                {"1. Se forventet indbetaling pr. år", "2. Se restanceoversigt"});
+        menu.printMenu();
 
-       switch(menu.readChoice()) {
-           case 1:
-               System.out.println("Den forventede kontigentindbetaling i år: " + controller.getExpectedPayments() + "kr.");
-               break;
-           case 2:
-               for (String member:controller.showMembersInDebt()) {
-                   System.out.println(member);
-               }
-               break;
+        switch (menu.readChoice()) {
+            case 1:
+                System.out.println("Den forventede kontigentindbetaling i år: " + controller.getExpectedPayments() + "kr.");
+                break;
+            case 2:
+                for (String member : controller.showMembersInDebt()) {
+                    System.out.println(member);
+                }
+                break;
 
-           default:
-               printWrongInputMessage();
+            default:
+                printWrongInputMessage();
 
 
-       }
+        }
     }
 
     private void getTopFive() {
@@ -77,8 +88,7 @@ public class UserInterface {
         int id = 1;
         if (controller.getTopFive(swimmingDiscipline).length == 0) {
             System.out.println("Der er ikke nogle konkurrencesvømmere i den valgte disciplin");
-        }
-        else {
+        } else {
             for (String string : controller.getTopFive(swimmingDiscipline)) {
                 System.out.println(id + ". " + string);
                 id++;
@@ -115,7 +125,7 @@ public class UserInterface {
             tournament = input.next();
         }
         Result result = controller.registerResult(personNumber, disciplin, date,
-                                                  time, tournament, isCompetitiveResult);
+                time, tournament, isCompetitiveResult);
         if (result == null) {
             System.out.println("Du har prøvet at registrere en tid som er værre end en allerede ekstisterende tid");
         } else {
@@ -166,7 +176,7 @@ public class UserInterface {
         System.out.println("Har oprettet nyt medlem: " + member);
     }
 
-    public void printWrongInputMessage(){
+    public void printWrongInputMessage() {
         System.out.println("Dit indtastede valg er ikke en mulighed");
     }
 }

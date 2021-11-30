@@ -28,7 +28,7 @@ public class Controller {
     }
 
     public String[] getTopFive(int swimmingDiscipline) {
-       return db.getTopFive(swimmingDiscipline);
+       return db.showTopFive(swimmingDiscipline);
 
     }
 
