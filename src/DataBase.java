@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DataBase {
-    private final String filenameResults = "src/Results.txt";
-    private final String filenameUserInfo = "src/Userinfo.txt";
+    private final String filenameResults = "src/Results.csv";
+    private final String filenameUserInfo = "src/Userinfo.csv";
     private final File fileUserInfo = new File(filenameUserInfo);
     private final File fileResults = new File(filenameResults);
     private ArrayList<Member> members = new ArrayList<>();
