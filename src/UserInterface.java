@@ -130,7 +130,7 @@ public class UserInterface {
         int time = input.nextInt();
         if (choice.equals("k")) {
             System.out.println("Indtast navnet på turneringen");
-            tournament = input.next();
+            tournament = input.nextLine();
         }
         Result result = controller.registerResult(personNumber, disciplin, date,
                 time, tournament, isCompetitiveResult);
