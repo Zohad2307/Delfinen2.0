@@ -16,8 +16,7 @@ public class UserInterface {
                 "5. Se menuoversigt", "9. Luk program"});
         try {
             controller.start();
-        }
-        catch (CSVFileReadException e) {
+        } catch (CSVFileReadException e) {
             System.out.println(e);
 
         }
@@ -28,12 +27,23 @@ public class UserInterface {
             switch (menu.readChoice()) {
                 case 1:
                     createMember();
+                    try {
+                        controller.saveFiles();
+                    }
+                    catch (CSVFileWriteException e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 2:
                     getTopFive();
                     break;
                 case 3:
                     registerResult();
+                    try {
+                        controller.saveFiles();
+                    } catch (CSVFileWriteException e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 4:
                     getPaymentOverview();
@@ -45,8 +55,7 @@ public class UserInterface {
                     isRunning = false;
                     try {
                         controller.saveFiles();
-                    }
-                    catch (CSVFileWriteException e) {
+                    } catch (CSVFileWriteException e) {
                         System.out.println(e);
                     }
                     break;
@@ -81,15 +90,16 @@ public class UserInterface {
 
         }
     }
+
     // Henter en liste med top 5 svømmere ud fra valgte disciplin og om det er junior- eller seniorsvømmere,
     // og printer den derefter ud
     private void getTopFive() {
         System.out.println("Vælg om du vil se junior- eller seniorkonkurrencesvømmere \n1. Junior \n2. Senior");
         int swimmingTeam = input.nextInt();
         boolean isJuniorSwimmer;
-        if(swimmingTeam == 1){
+        if (swimmingTeam == 1) {
             isJuniorSwimmer = true;
-        }else{
+        } else {
             isJuniorSwimmer = false;
         }
         System.out.println("Vælg svømmedisciplin\n1. Crawl\n2. Rygcrawl\n3. Butterfly\n4. Brystsvømning");
@@ -106,12 +116,13 @@ public class UserInterface {
             }
         }
     }
+
     // Printer først en liste over konkurrencesvømmere, tager derefter en masse input og sender det videre
     // til DataBase classen. Hvis der er blevet registreret et resultat, bliver det printet ud.
     private void registerResult() {
         String tournament = "";
         boolean isCompetitiveResult;
-        System.out.println("Indtast id på den person der skal have registreret en tid");
+        System.out.println("Indtast id på den person, der skal have registreret en tid");
         for (Member member : controller.getCompetitiveSwimmers()) {
             System.out.println(member);
         }
@@ -127,10 +138,12 @@ public class UserInterface {
         } else {
             isCompetitiveResult = false;
         }
-        System.out.println("Indtast den dato for hvornår tiden er svømmet");
+        System.out.println("Indtast dato for hvornår tiden er svømmet");
         String date = input.next();
         System.out.println("Indtast din tid i sekunder");
         int time = input.nextInt();
+        // tømmer scanneren(scannerbug)
+        input.nextLine();
         if (choice.equals("k")) {
             System.out.println("Indtast navnet på turneringen");
             tournament = input.nextLine();
@@ -138,11 +151,12 @@ public class UserInterface {
         Result result = controller.registerResult(personNumber, disciplin, date,
                 time, tournament, isCompetitiveResult);
         if (result == null) {
-            System.out.println("Du har prøvet at registrere en tid som er værre end en allerede ekstisterende tid");
+            System.out.println("Du har prøvet at registrere en tid som er værre end en eksisterende tid");
         } else {
             System.out.println("Du har registreret resultatet: " + result);
         }
     }
+
     // Tager en masse input og sender det videre
     // til DataBase classen. Hvis der er blevet registreret et medlem, bliver det printet ud.
     private void createMember() {

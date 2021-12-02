@@ -61,7 +61,7 @@ public abstract class Member {
     public String toPayment(){
         final String TEXT_RED = "\u001B[31m";
         final String TEXT_RESET = "\u001B[0m";
-        return toString() + " "+ TEXT_RED + getPayment() + "kr." + TEXT_RESET;
+        return toString() + " "+ TEXT_RED + getPayment() + TEXT_RESET + " kr.";
     }
 
     public int getYearOfBirth() {
