@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class UserInterface {
     private Controller controller;
-    Scanner input = new Scanner(System.in);
+    private Scanner input = new Scanner(System.in);
+
     public UserInterface(Controller controller) {
         this.controller = controller;
 
@@ -11,7 +12,8 @@ public class UserInterface {
     public void run() {
         Menu menu = new Menu("Velkommen til Delfinen",
                 "Vælg en af ovennævnte muligheder", new String[]{"1. Opret medlem",
-                "2. Se topsvømmere", "3. Registrer resultat", "4. Se Regnskab", "5. Se menuoversigt", "9. Luk program"});
+                "2. Se topsvømmere", "3. Registrer resultat", "4. Se Regnskab",
+                "5. Se menuoversigt", "9. Luk program"});
         try {
             controller.start();
         }
@@ -20,7 +22,7 @@ public class UserInterface {
 
         }
         boolean isRunning = true;
-
+        // Switch til menuen
         menu.printMenu();
         while (isRunning) {
             switch (menu.readChoice()) {
@@ -47,7 +49,6 @@ public class UserInterface {
                     catch (CSVFileWriteException e) {
                         System.out.println(e);
                     }
-                    //Eventuelt gemme det man på nuværende tidspunkt har lavet
                     break;
                 default:
                     printWrongInputMessage();
@@ -61,11 +62,12 @@ public class UserInterface {
         Menu menu = new Menu("Se regnskab", "Vælg en af ovennævnte", new String[]
                 {"1. Se forventet indbetaling pr. år", "2. Se restanceoversigt"});
         menu.printMenu();
-
+        // Henter en liste ud fra den valgte mulighed og printer den
         switch (menu.readChoice()) {
             case 1:
                 final String TEXT_GREEN = "\u001B[32m";
-                System.out.println("Den forventede kontigentindbetaling i år: " + TEXT_GREEN + controller.getExpectedPayments() + "kr.");
+                System.out.println("Den forventede kontigentindbetaling i år: " +
+                        TEXT_GREEN + controller.getExpectedPayments() + "kr.");
                 break;
             case 2:
                 for (String member : controller.showMembersInDebt()) {
@@ -79,7 +81,8 @@ public class UserInterface {
 
         }
     }
-
+    // Henter en liste med top 5 svømmere ud fra valgte disciplin og om det er junior- eller seniorsvømmere,
+    // og printer den derefter ud
     private void getTopFive() {
         System.out.println("Vælg om du vil se junior- eller seniorkonkurrencesvømmere \n1. Junior \n2. Senior");
         int swimmingTeam = input.nextInt();
@@ -89,7 +92,6 @@ public class UserInterface {
         }else{
             isJuniorSwimmer = false;
         }
-        //Lav det med menu klassen
         System.out.println("Vælg svømmedisciplin\n1. Crawl\n2. Rygcrawl\n3. Butterfly\n4. Brystsvømning");
         int swimmingDiscipline = input.nextInt();
 
@@ -104,7 +106,8 @@ public class UserInterface {
             }
         }
     }
-
+    // Printer først en liste over konkurrencesvømmere, tager derefter en masse input og sender det videre
+    // til DataBase classen. Hvis der er blevet registreret et resultat, bliver det printet ud.
     private void registerResult() {
         String tournament = "";
         boolean isCompetitiveResult;
@@ -113,7 +116,7 @@ public class UserInterface {
             System.out.println(member);
         }
         int personNumber = input.nextInt();
-        //TODO Lav det med menu klassen
+
         System.out.println("Hvilken svømmedisciplin skal registreres?\n1. Crawl\n2. Rygcrawl" +
                 "\n3. Butterfly\n4. Brystsvømning");
         int disciplin = input.nextInt();
@@ -140,7 +143,8 @@ public class UserInterface {
             System.out.println("Du har registreret resultatet: " + result);
         }
     }
-
+    // Tager en masse input og sender det videre
+    // til DataBase classen. Hvis der er blevet registreret et medlem, bliver det printet ud.
     private void createMember() {
         boolean isActive;
         boolean isCompetitiveSwimmer;
